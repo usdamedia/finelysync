@@ -94,7 +94,13 @@ mobile dan dialog di desktop.
 
 ## Deploy
 
-- **Vercel:** `vercel.json` menulis semula semua laluan ke `index.html` (SPA). `npm run deploy`.
+- **Cloudflare Workers (utama):** `wrangler.toml` menghidangkan `dist/` sebagai static assets dengan
+  SPA fallback (`not_found_handling = "single-page-application"`).
+  - Git → Cloudflare: sambungkan repo, set **Build command** `npm run build` dan
+    **Deploy command** `npx wrangler deploy`.
+  - Manual: `npm run deploy:cf` · pratonton: `npm run cf:preview`.
+  - Tetapkan env `VITE_FIREBASE_*` dalam dashboard Cloudflare (build-time).
+- **Vercel (dipause):** `vercel.json` menulis semula semua laluan ke `index.html`. `npm run deploy`.
 - **Mobile:** `npm run cap:sync` kemudian buka projek native.
 
 ## Nota

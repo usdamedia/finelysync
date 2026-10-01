@@ -13,6 +13,8 @@
     "ios:open": "npx cap open ios",
     "build:mobile": "eas build",
     "deploy": "vercel --prod",
+    "deploy:cf": "npm run build && npx wrangler deploy",
+    "cf:preview": "npm run build && npx wrangler dev",
     "lint": "tsc --noEmit"
   },
   "dependencies": {
