@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#F5F5F7" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0B0B0F" media="(prefers-color-scheme: dark)" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="FinelySync" />
+    <meta name="google-signin-client_id" content="978808382506-a5v8nirrbf6it5ll6ea9hmlpp60a2ruf.apps.googleusercontent.com" />
+    <title>FinelySync - Family Finance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              primary: 'var(--color-primary)',
+              onPrimary: 'var(--color-on-primary)',
+              primaryContainer: 'var(--color-primary-container)',
+              onPrimaryContainer: 'var(--color-on-primary-container)',
+              secondary: 'var(--color-secondary)',
+              onSecondary: 'var(--color-on-secondary)',
+              secondaryContainer: 'var(--color-secondary-container)',
+              onSecondaryContainer: 'var(--color-on-secondary-container)',
+              tertiary: 'var(--color-tertiary)',
+              tertiaryContainer: 'var(--color-tertiary-container)',
+              onTertiaryContainer: 'var(--color-on-tertiary-container)',
+              background: 'var(--color-background)',
+              surface: 'var(--color-surface)',
+              surfaceVariant: 'var(--color-surface-variant)',
+              onSurface: 'var(--color-on-surface)',
+              onSurfaceVariant: 'var(--color-on-surface-variant)',
+              outline: 'var(--color-outline)',
+              error: 'var(--color-error)',
+              success: 'var(--color-success)',
+              warning: 'var(--color-warning)',
+              info: 'var(--color-info)',
+            },
+            borderRadius: {
+              'xs': '6px',
+              'sm': '8px',
+              'md': '12px',
+              'lg': '16px',
+              'xl': '20px',
+              '2xl': '24px',
+              '3xl': '28px',
+              'golden': '2.5rem',
+            },
+            boxShadow: {
+              'elevation-1': 'var(--shadow-1)',
+              'elevation-2': 'var(--shadow-2)',
+              'elevation-3': 'var(--shadow-3)',
+              'soft': 'var(--shadow-1)',
+              'aesthetic': 'var(--shadow-2)',
+              'aesthetic-hover': 'var(--shadow-3)',
+              'ios': 'var(--shadow-1)',
+              'ios-lg': 'var(--shadow-2)',
+            },
+            animation: {
+              'fade-in': 'fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
+              'scale-in': 'scaleIn 0.28s cubic-bezier(0.16, 1, 0.3, 1)',
+              'slide-up': 'slideUp 0.32s cubic-bezier(0.16, 1, 0.3, 1)',
+              'float': 'float 3s ease-in-out infinite',
+              'spin-slow': 'spin 2.4s linear infinite',
+              'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            },
+            keyframes: {
+              fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+              scaleIn: { '0%': { transform: 'scale(0.97)', opacity: '0' }, '100%': { transform: 'scale(1)', opacity: '1' } },
+              slideUp: { '0%': { transform: 'translateY(16px)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' } },
+              float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-8px)' } },
+            },
+            screens: {
+              'xs': '375px',
+            },
+          }
+        }
+      }
+    </script>
+    <style>
+      /* ============================================================
+         FINELYSYNC DESIGN TOKENS
+         Single source of truth: colour, elevation, radius, motion.
+         ============================================================ */
+      :root {
+        /* Brand (themeable via JS) */
+        --color-primary: #5E5CE6;
+        --color-on-primary: #ffffff;
+        --color-primary-container: rgba(94, 92, 230, 0.12);
+        --color-on-primary-container: #3B39B8;
+
+        /* Accent roles (subtle, semantic use only) */
+        --color-secondary: #F472B6;
+        --color-on-secondary: #ffffff;
+        --color-secondary-container: rgba(244, 114, 182, 0.14);
+        --color-on-secondary-container: #9D2A63;
+
+        --color-tertiary: #10B981;
+        --color-tertiary-container: rgba(16, 185, 129, 0.14);
+        --color-on-tertiary-container: #047857;
+
+        /* Neutrals */
+        --color-background: #F5F5F7;
+        --color-surface: #FFFFFF;
+        --color-surface-variant: #F0F0F3;
+        --color-on-surface: #1D1D1F;
+        --color-on-surface-variant: #6E6E73;
+        --color-outline: #D2D2D7;
+
+        /* Semantic */
+        --color-error: #FF3B30;
+        --color-success: #34C759;
+        --color-warning: #FF9F0A;
+        --color-info: #0A84FF;
+
+        /* Elevation */
+        --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.06);
+        --shadow-2: 0 4px 16px -2px rgba(0, 0, 0, 0.08), 0 2px 6px -2px rgba(0, 0, 0, 0.05);
+        --shadow-3: 0 16px 40px -12px rgba(0, 0, 0, 0.18), 0 4px 12px -4px rgba(0, 0, 0, 0.08);
+
+        /* Glass (restrained) */
+        --color-glass-bg: rgba(255, 255, 255, 0.72);
+        --color-glass-border: rgba(0, 0, 0, 0.06);
+        --blur: 20px;
+
+        /* ── Apple HIG Materials ──────────────────────────────────
+           Standard materials (content layer) + bar material (functional
+           layer / Liquid Glass equivalent on the web). */
+        --material-ultra-thin: rgba(255, 255, 255, 0.44);
+        --material-thin: rgba(255, 255, 255, 0.62);
+        --material-regular: rgba(255, 255, 255, 0.74);
+        --material-thick: rgba(255, 255, 255, 0.86);
+        --material-ultra-thick: rgba(255, 255, 255, 0.95);
+        --material-bar: rgba(255, 255, 255, 0.72);
+
+        --material-blur-ultra-thin: 16px;
+        --material-blur-thin: 24px;
+        --material-blur-regular: 30px;
+        --material-blur-thick: 40px;
+        --material-blur-ultra-thick: 50px;
+        --material-blur-bar: 20px;
+
+        --material-border: rgba(0, 0, 0, 0.07);
+        --material-edge: rgba(255, 255, 255, 0.6);
+        --material-scrim: rgba(0, 0, 0, 0.35);
+
+        /* Vibrancy — label / fill / separator levels */
+        --vibrant-label: rgba(0, 0, 0, 0.88);
+        --vibrant-secondary: rgba(0, 0, 0, 0.56);
+        --vibrant-tertiary: rgba(0, 0, 0, 0.34);
+        --vibrant-quaternary: rgba(0, 0, 0, 0.18);
+        --vibrant-fill: rgba(120, 120, 128, 0.20);
+        --vibrant-secondary-fill: rgba(120, 120, 128, 0.16);
+        --vibrant-tertiary-fill: rgba(120, 120, 128, 0.12);
+        --vibrant-separator: rgba(60, 60, 67, 0.29);
+      }
+
+      .dark {
+        --color-primary: #7C7AFF;
+        --color-on-primary: #ffffff;
+        --color-primary-container: rgba(124, 122, 255, 0.18);
+        --color-on-primary-container: #C9C8FF;
+
+        --color-secondary: #F472B6;
+        --color-on-secondary: #1D1D1F;
+        --color-secondary-container: rgba(244, 114, 182, 0.2);
+        --color-on-secondary-container: #FBCFE8;
+
+        --color-tertiary: #30D158;
+        --color-tertiary-container: rgba(48, 209, 88, 0.18);
+        --color-on-tertiary-container: #A7F3C0;
+
+        --color-background: #0B0B0F;
+        --color-surface: #1C1C1E;
+        --color-surface-variant: #2C2C2E;
+        --color-on-surface: #F5F5F7;
+        --color-on-surface-variant: #98989D;
+        --color-outline: #38383A;
+
+        --color-error: #FF453A;
+        --color-success: #30D158;
+        --color-warning: #FFD60A;
+        --color-info: #64D2FF;
+
+        --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+        --shadow-2: 0 6px 20px -4px rgba(0, 0, 0, 0.55);
+        --shadow-3: 0 20px 48px -12px rgba(0, 0, 0, 0.7);
+
+        --color-glass-bg: rgba(28, 28, 30, 0.72);
+        --color-glass-border: rgba(255, 255, 255, 0.08);
+
+        /* Apple HIG Materials — dark appearance */
+        --material-ultra-thin: rgba(30, 30, 32, 0.46);
+        --material-thin: rgba(28, 28, 30, 0.62);
+        --material-regular: rgba(28, 28, 30, 0.74);
+        --material-thick: rgba(28, 28, 30, 0.86);
+        --material-ultra-thick: rgba(28, 28, 30, 0.95);
+        --material-bar: rgba(28, 28, 30, 0.72);
+
+        --material-border: rgba(255, 255, 255, 0.09);
+        --material-edge: rgba(255, 255, 255, 0.06);
+        --material-scrim: rgba(0, 0, 0, 0.5);
+
+        --vibrant-label: rgba(255, 255, 255, 0.92);
+        --vibrant-secondary: rgba(255, 255, 255, 0.60);
+        --vibrant-tertiary: rgba(255, 255, 255, 0.40);
+        --vibrant-quaternary: rgba(255, 255, 255, 0.24);
+        --vibrant-fill: rgba(120, 120, 128, 0.36);
+        --vibrant-secondary-fill: rgba(120, 120, 128, 0.32);
+        --vibrant-tertiary-fill: rgba(120, 120, 128, 0.24);
+        --vibrant-separator: rgba(84, 84, 88, 0.65);
+      }
+
+      /* ── Dark variant: Grey (Material UI) ─────────────────────
+         Neutral, elevated grey surfaces with a slightly lighter
+         background than the true-dark (OLED) appearance. */
+      .dark.dark-grey {
+        --color-background: #121212;
+        --color-surface: #1E1E1E;
+        --color-surface-variant: #2C2C2C;
+        --color-on-surface: #E8E8E8;
+        --color-on-surface-variant: #A3A3A3;
+        --color-outline: #3D3D3D;
+
+        --material-ultra-thin: rgba(30, 30, 30, 0.50);
+        --material-thin: rgba(30, 30, 30, 0.66);
+        --material-regular: rgba(30, 30, 30, 0.78);
+        --material-thick: rgba(30, 30, 30, 0.88);
+        --material-ultra-thick: rgba(30, 30, 30, 0.96);
+        --material-bar: rgba(30, 30, 30, 0.78);
+
+        --material-border: rgba(255, 255, 255, 0.10);
+        --material-edge: rgba(255, 255, 255, 0.07);
+
+        --vibrant-label: rgba(255, 255, 255, 0.90);
+        --vibrant-secondary: rgba(255, 255, 255, 0.62);
+        --vibrant-tertiary: rgba(255, 255, 255, 0.42);
+        --vibrant-quaternary: rgba(255, 255, 255, 0.26);
+      }
+
+      /* ============================================================
+         BASE
+         ============================================================ */
+      html {
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+      }
+
+      body {
+        margin: 0;
+        background-color: var(--color-background);
+        color: var(--color-on-surface);
+        font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Inter', system-ui, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      /* Scoped, fast transitions — never global */
+      a,
+      button,
+      input,
+      select,
+      textarea,
+      [role='button'],
+      [role='tab'] {
+        transition-property: background-color, border-color, color, box-shadow, opacity, transform;
+        transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+        transition-duration: 180ms;
+      }
+
+      /* Accessibility: visible focus, only for keyboard users */
+      :focus-visible {
+        outline: 2px solid var(--color-primary);
+        outline-offset: 2px;
+        border-radius: 6px;
+      }
+
+      @keyframes bmc-float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-8px); }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+          scroll-behavior: auto !important;
+        }
+      }
+
+      /* ============================================================
+         TYPOGRAPHY SCALE (Apple HIG)
+         ============================================================ */
+      .type-large-title { font-size: 2.125rem; line-height: 1.15; font-weight: 700; letter-spacing: -0.022em; }
+      .type-title1 { font-size: 1.75rem; line-height: 1.2; font-weight: 700; letter-spacing: -0.02em; }
+      .type-title2 { font-size: 1.375rem; line-height: 1.25; font-weight: 600; letter-spacing: -0.017em; }
+      .type-title3 { font-size: 1.25rem; line-height: 1.3; font-weight: 600; letter-spacing: -0.014em; }
+      .type-headline { font-size: 1.0625rem; line-height: 1.35; font-weight: 600; letter-spacing: -0.01em; }
+      .type-body { font-size: 1.0625rem; line-height: 1.5; font-weight: 400; letter-spacing: -0.01em; }
+      .type-callout { font-size: 1rem; line-height: 1.45; font-weight: 400; }
+      .type-subheadline { font-size: 0.9375rem; line-height: 1.4; font-weight: 400; }
+      .type-footnote { font-size: 0.8125rem; line-height: 1.4; font-weight: 400; color: var(--color-on-surface-variant); }
+      .type-caption { font-size: 0.75rem; line-height: 1.35; font-weight: 400; color: var(--color-on-surface-variant); }
+
+      /* Backward-compatible aliases (existing markup) */
+      .text-ios-title { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; }
+      .text-ios-headline { font-size: 1.0625rem; font-weight: 600; letter-spacing: -0.01em; line-height: 1.35; }
+      .text-ios-body { font-size: 1rem; font-weight: 400; line-height: 1.5; }
+      .text-ios-caption { font-size: 0.8125rem; font-weight: 400; line-height: 1.4; color: var(--color-on-surface-variant); }
+      .text-ios-label { font-size: 0.875rem; font-weight: 500; line-height: 1.4; }
+
+      /* ============================================================
+         APPLE HIG MATERIALS
+         A material creates depth, layering and hierarchy between
+         foreground and background elements.
+         ─ Standard materials (content layer): ultra-thin, thin,
+           regular, thick, ultra-thick.
+         ─ Bar material (functional layer — tab bars, sidebars,
+           sheets — the web equivalent of Liquid Glass).
+         ─ Vibrancy keeps labels/fills/separators legible on top.
+         ============================================================ */
+      .material-ultra-thin,
+      .material-thin,
+      .material-regular,
+      .material-thick,
+      .material-ultra-thick,
+      .material-bar {
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        backdrop-filter: blur(20px) saturate(180%);
+        border: 1px solid var(--material-border);
+      }
+
+      .material-ultra-thin {
+        background: var(--material-ultra-thin);
+        -webkit-backdrop-filter: blur(var(--material-blur-ultra-thin)) saturate(180%);
+        backdrop-filter: blur(var(--material-blur-ultra-thin)) saturate(180%);
+      }
+
+      .material-thin {
+        background: var(--material-thin);
+        -webkit-backdrop-filter: blur(var(--material-blur-thin)) saturate(180%);
+        backdrop-filter: blur(var(--material-blur-thin)) saturate(180%);
+      }
+
+      .material-regular {
+        background: var(--material-regular);
+        -webkit-backdrop-filter: blur(var(--material-blur-regular)) saturate(180%);
+        backdrop-filter: blur(var(--material-blur-regular)) saturate(180%);
+      }
+
+      .material-thick {
+        background: var(--material-thick);
+        -webkit-backdrop-filter: blur(var(--material-blur-thick)) saturate(180%);
+        backdrop-filter: blur(var(--material-blur-thick)) saturate(180%);
+      }
+
+      .material-ultra-thick {
+        background: var(--material-ultra-thick);
+        -webkit-backdrop-filter: blur(var(--material-blur-ultra-thick)) saturate(180%);
+        backdrop-filter: blur(var(--material-blur-ultra-thick)) saturate(180%);
+      }
+
+      /* Functional layer (bars, sidebars, sheets) */
+      .material-bar {
+        background: var(--material-bar);
+        -webkit-backdrop-filter: blur(var(--material-blur-bar)) saturate(180%);
+        backdrop-filter: blur(var(--material-blur-bar)) saturate(180%);
+      }
+
+      /* Subtle top highlight that gives a material a sense of edge/depth */
+      .material-edge {
+        position: relative;
+      }
+      .material-edge::before {
+        content: '';
+        position: absolute;
+        inset: 0 0 auto 0;
+        height: 1px;
+        background: var(--material-edge);
+        pointer-events: none;
+      }
+
+      /* Dimming layer for clear materials over bright/rich content */
+      .material-scrim {
+        background: var(--material-scrim);
+        -webkit-backdrop-filter: blur(4px);
+        backdrop-filter: blur(4px);
+      }
+
+      /* Divider modifiers — a bar usually separates on one edge only */
+      [class*='material-'].material-divider-r { border: none; border-right: 1px solid var(--material-border); }
+      [class*='material-'].material-divider-l { border: none; border-left: 1px solid var(--material-border); }
+      [class*='material-'].material-divider-t { border: none; border-top: 1px solid var(--material-border); }
+      [class*='material-'].material-divider-b { border: none; border-bottom: 1px solid var(--material-border); }
+      [class*='material-'].material-borderless { border: none; }
+
+      /* Vibrancy — use on content placed on top of a material */
+      .vibrant-label { color: var(--vibrant-label); }
+      .vibrant-secondary { color: var(--vibrant-secondary); }
+      .vibrant-tertiary { color: var(--vibrant-tertiary); }
+      .vibrant-quaternary { color: var(--vibrant-quaternary); }
+      .vibrant-fill { background: var(--vibrant-fill); }
+      .vibrant-secondary-fill { background: var(--vibrant-secondary-fill); }
+      .vibrant-tertiary-fill { background: var(--vibrant-tertiary-fill); }
+      .vibrant-separator { background: var(--vibrant-separator); }
+
+      /* Ambient backdrop — gives materials something meaningful to blur.
+         Extremely subtle; not decorative. */
+      .app-ambient {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background:
+          radial-gradient(55% 42% at 8% 0%, var(--color-primary-container), transparent 72%),
+          radial-gradient(48% 38% at 100% 6%, var(--color-tertiary-container), transparent 72%);
+      }
+
+      /* Accessibility: honour Reduce Transparency (fall back to opaque) */
+      @media (prefers-reduced-transparency: reduce) {
+        .material-ultra-thin,
+        .material-thin,
+        .material-regular,
+        .material-thick,
+        .material-ultra-thick,
+        .material-bar {
+          background: var(--color-surface) !important;
+          -webkit-backdrop-filter: none !important;
+          backdrop-filter: none !important;
+        }
+        .material-scrim {
+          background: rgba(0, 0, 0, 0.6);
+          -webkit-backdrop-filter: none !important;
+          backdrop-filter: none !important;
+        }
+      }
+
+      /* Accessibility: honour Increase Contrast */
+      @media (prefers-contrast: more) {
+        :root { --material-border: rgba(0, 0, 0, 0.22); --vibrant-secondary: rgba(0,0,0,0.72); --vibrant-tertiary: rgba(0,0,0,0.5); }
+        .dark { --material-border: rgba(255, 255, 255, 0.28); --vibrant-secondary: rgba(255,255,255,0.78); --vibrant-tertiary: rgba(255,255,255,0.58); }
+        .material-ultra-thin,
+        .material-thin {
+          background: var(--material-regular);
+        }
+      }
+
+      /* ============================================================
+         SURFACES
+         ============================================================ */
+      .glass {
+        background: var(--material-regular);
+        -webkit-backdrop-filter: blur(var(--material-blur-regular)) saturate(180%);
+        backdrop-filter: blur(var(--material-blur-regular)) saturate(180%);
+        border: 1px solid var(--material-border);
+      }
+
+      .glass-strong {
+        background: var(--material-thick);
+        -webkit-backdrop-filter: blur(var(--material-blur-thick)) saturate(180%);
+        backdrop-filter: blur(var(--material-blur-thick)) saturate(180%);
+        border: 1px solid var(--material-border);
+      }
+
+      .glass-card {
+        background: var(--color-surface);
+        border: 1px solid var(--color-outline);
+        box-shadow: var(--shadow-1);
+      }
+
+      .ios-card {
+        background: var(--color-surface);
+        border-radius: 16px;
+        border: 1px solid var(--color-outline);
+        box-shadow: var(--shadow-1);
+      }
+
+      .ios-list {
+        background: var(--color-surface);
+        border-radius: 16px;
+        overflow: hidden;
+        border: 1px solid var(--color-outline);
+      }
+
+      .ios-list-item {
+        padding: 0.875rem 1rem;
+        border-bottom: 1px solid var(--color-outline);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 48px;
+        width: 100%;
+        text-align: left;
+      }
+
+      .ios-list-item:last-child { border-bottom: none; }
+
+      /* ============================================================
+         CONTROLS
+         ============================================================ */
+      .ios-tab-bar {
+        background: var(--material-bar);
+        backdrop-filter: blur(var(--material-blur-bar)) saturate(180%);
+        -webkit-backdrop-filter: blur(var(--material-blur-bar)) saturate(180%);
+        border-top: 1px solid var(--material-border);
+      }
+
+      .ios-segmented {
+        background: var(--material-thin);
+        -webkit-backdrop-filter: blur(var(--material-blur-thin)) saturate(180%);
+        backdrop-filter: blur(var(--material-blur-thin)) saturate(180%);
+        border: 1px solid var(--material-border);
+        border-radius: 12px;
+        padding: 3px;
+      }
+
+      .ios-segmented-item {
+        border-radius: 9px;
+        padding: 0.5rem 0.875rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--color-on-surface-variant);
+        min-height: 36px;
+      }
+
+      .ios-segmented-item.active {
+        background: var(--color-surface);
+        color: var(--color-on-surface);
+        box-shadow: var(--shadow-1);
+      }
+
+      .ios-button {
+        min-height: 48px;
+        border-radius: 14px;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding-inline: 1.25rem;
+        cursor: pointer;
+      }
+
+      .ios-button:active { transform: scale(0.98); }
+      .ios-button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+      .ios-button-primary { background: var(--color-primary); color: var(--color-on-primary); }
+      .ios-button-secondary { background: var(--color-surface-variant); color: var(--color-on-surface); }
+      .ios-button-destructive { background: var(--color-error); color: #fff; }
+
+      /* Safe areas */
+      .safe-bottom { padding-bottom: max(0.5rem, env(safe-area-inset-bottom)); }
+      .safe-top { padding-top: max(0px, env(safe-area-inset-top)); }
+
+      /* ============================================================
+         SCROLLBARS
+         ============================================================ */
+      ::-webkit-scrollbar { width: 8px; height: 8px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      ::-webkit-scrollbar-thumb { background: var(--color-outline); border-radius: 10px; }
+      ::-webkit-scrollbar-thumb:hover { background: var(--color-on-surface-variant); }
+
+      .custom-scrollbar { scrollbar-width: thin; scrollbar-color: var(--color-outline) transparent; }
+      .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+      .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--color-outline); border-radius: 999px; }
+
+      .no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+
+      /* Utility: hide content visually but keep for screen readers */
+      .sr-only-focusable:not(:focus):not(:focus-within) {
+        position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+        overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">Memuatkan FinelySync...</div>
+    <script type="module" src="/main.tsx"></script>
+  </body>
+</html>

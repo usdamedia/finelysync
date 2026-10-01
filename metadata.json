@@ -1,0 +1,5 @@
+{
+  "name": "FinelySync",
+  "description": "A modern React application for dual-income couples to manage monthly expenses, split household commitments, and visualize financial health. Optimized for dual-deployment on Vercel and Google Cloud Run.",
+  "requestFramePermissions": []
+}

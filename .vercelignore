@@ -1,0 +1,10 @@
+# Ignore Cloud Run specific files
+Dockerfile
+.dockerignore
+server.js
+
+# Ignore local artifacts
+node_modules
+.env
+.DS_Store
+npm-debug.log

@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">FinelySync</string>
+    <string name="title_activity_main">FinelySync</string>
+    <string name="package_name">com.finelysync.app</string>
+    <string name="custom_url_scheme">com.finelysync.app</string>
+    <string name="server_client_id">978808382506-a5v8nirrbf6it5ll6ea9hmlpp60a2ruf.apps.googleusercontent.com</string>
+    <string name="default_web_client_id">978808382506-a5v8nirrbf6it5ll6ea9hmlpp60a2ruf.apps.googleusercontent.com</string>
+</resources>

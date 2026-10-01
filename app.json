@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "name": "FinelySync",
+    "slug": "finelysync",
+    "version": "1.0.0",
+    "extra": {
+      "eas": {
+        "projectId": "c7eb904f-94df-4914-945d-65ba6a0085b4"
+      }
+    }
+  }
+}
